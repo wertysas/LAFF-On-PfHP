@@ -1,17 +1,10 @@
-# HOME      := /Users/rvdg
+include ../../../common.mk
 
-# Make sure you have BLIS installed in your home directory (or some other BLAS library)
-BLAS_LIB  := $(HOME)/blis/lib/libblis.a
-BLAS_INC  := $(HOME)/blis/include/blis
-
-# indicate how the object files are to be created
-CC         := gcc
-LINKER     := $(CC)
 CFLAGS     := -O3 -I$(BLAS_INC) -m64 -mavx2 -std=c99 -march=native -fopenmp -D_POSIX_C_SOURCE=200809L
 FFLAGS     := $(CFLAGS) 
 
 # set the range of experiments to be performed
-NREPEATS   := 3#      number of times each experiment is repeated.  The best time is reported.
+NREPEATS   := 5#      number of times each experiment is repeated.  The best time is reported.
 NFIRST     := 48#     smallest size to be timed.
 NLAST_SMALL:= 500#    largest size to be timed for slow implementations.
 NLAST      := 1500#   largest size to be timed for fast implementations.
@@ -29,8 +22,8 @@ driver_IJP.x: $(OBJS_IJP) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IJP) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IJP.x $(LDFLAGS) 
 
 IJP: driver_IJP.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJP.x > data/output_IJP.m 
-	tail data/output_IJP.m 
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJP.x > data/output_IJP.txt
+	tail data/output_IJP.txt
 
 # ---------------------
 
@@ -40,8 +33,8 @@ driver_IPJ.x: $(OBJS_IPJ) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IPJ) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IPJ.x $(LDFLAGS) 
 
 IPJ: driver_IPJ.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IPJ.x >  data/output_IPJ.m
-	tail data/output_IPJ.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IPJ.x >  data/output_IPJ.txt
+	tail data/output_IPJ.txt
 
 # ---------------------
 
@@ -51,8 +44,8 @@ driver_IP_Axpy.x: $(OBJS_IP_Axpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IP_Axpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IP_Axpy.x $(LDFLAGS) 
 
 IP_Axpy: driver_IP_Axpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IP_Axpy.x > data/output_IP_Axpy.m
-	tail data/output_IP_Axpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IP_Axpy.x > data/output_IP_Axpy.txt
+	tail data/output_IP_Axpy.txt
 
 # ---------------------
 
@@ -62,8 +55,8 @@ driver_IP_daxpy.x: $(OBJS_IP_daxpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IP_daxpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IP_daxpy.x $(LDFLAGS) 
 
 IP_daxpy: driver_IP_daxpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IP_daxpy.x > data/output_IP_daxpy.m
-	tail data/output_IP_daxpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IP_daxpy.x > data/output_IP_daxpy.txt
+	tail data/output_IP_daxpy.txt
 
 # ---------------------
 
@@ -73,8 +66,8 @@ driver_IP_bli_daxpyv.x: $(OBJS_IP_bli_daxpyv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IP_bli_daxpyv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IP_bli_daxpyv.x $(LDFLAGS) 
 
 IP_bli_daxpyv: driver_IP_bli_daxpyv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IP_bli_daxpyv.x >  data/output_IP_bli_daxpyv.m
-	tail data/output_IP_bli_daxpyv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IP_bli_daxpyv.x >  data/output_IP_bli_daxpyv.txt
+	tail data/output_IP_bli_daxpyv.txt
 
 # ---------------------
 
@@ -84,8 +77,8 @@ driver_JIP.x: $(OBJS_JIP) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JIP) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JIP.x $(LDFLAGS) 
 
 JIP: driver_JIP.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JIP.x > data/output_JIP.m 
-	tail data/output_JIP.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JIP.x > data/output_JIP.txt
+	tail data/output_JIP.txt
 
 # ---------------------
 
@@ -95,8 +88,8 @@ driver_JPI.x: $(OBJS_JPI) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JPI) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JPI.x $(LDFLAGS) 
 
 JPI: driver_JPI.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JPI.x > data/output_JPI.m 
-	tail data/output_JPI.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JPI.x > data/output_JPI.txt
+	tail data/output_JPI.txt
 
 # ---------------------
 
@@ -106,8 +99,8 @@ driver_PIJ.x: $(OBJS_PIJ) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PIJ) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PIJ.x $(LDFLAGS) 
 
 PIJ: driver_PIJ.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PIJ.x > data/output_PIJ.m 
-	tail data/output_PIJ.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PIJ.x > data/output_PIJ.txt
+	tail data/output_PIJ.txt
 
 # ---------------------
 
@@ -117,8 +110,8 @@ driver_PI_Axpy.x: $(OBJS_PI_Axpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PI_Axpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PI_Axpy.x $(LDFLAGS) 
 
 PI_Axpy: driver_PI_Axpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PI_Axpy.x >  data/output_PI_Axpy.m
-	tail data/output_PI_Axpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PI_Axpy.x >  data/output_PI_Axpy.txt
+	tail data/output_PI_Axpy.txt
 
 # ---------------------
 
@@ -128,8 +121,8 @@ driver_PI_daxpy.x: $(OBJS_PI_daxpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PI_daxpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PI_daxpy.x $(LDFLAGS) 
 
 PI_daxpy: driver_PI_daxpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PI_daxpy.x > data/output_PI_daxpy.m 
-	tail data/output_PI_daxpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PI_daxpy.x > data/output_PI_daxpy.txt
+	tail data/output_PI_daxpy.txt
 
 # ---------------------
 
@@ -139,8 +132,8 @@ driver_PI_bli_daxpyv.x: $(OBJS_PI_bli_daxpyv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PI_bli_daxpyv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PI_bli_daxpyv.x $(LDFLAGS) 
 
 PI_bli_daxpyv: driver_PI_bli_daxpyv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PI_bli_daxpyv.x > data/output_PI_bli_daxpyv.m 
-	tail data/output_PI_bli_daxpyv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PI_bli_daxpyv.x > data/output_PI_bli_daxpyv.txt
+	tail data/output_PI_bli_daxpyv.txt
 
 # ---------------------
 
@@ -150,8 +143,8 @@ driver_IJ_Dots.x: $(OBJS_IJ_DOTS) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IJ_DOTS) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IJ_Dots.x $(LDFLAGS) 
 
 IJ_Dots: driver_IJ_Dots.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJ_Dots.x > data/output_IJ_Dots.m 
-	tail data/output_IJ_Dots.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJ_Dots.x > data/output_IJ_Dots.txt
+	tail data/output_IJ_Dots.txt
 
 # ---------------------
 
@@ -161,8 +154,8 @@ driver_IJ_ddot.x: $(OBJS_IJ_ddot) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IJ_ddot) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IJ_ddot.x $(LDFLAGS) 
 
 IJ_ddot: driver_IJ_ddot.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJ_ddot.x > data/output_IJ_ddot.m
-	tail data/output_IJ_ddot.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJ_ddot.x > data/output_IJ_ddot.txt
+	tail data/output_IJ_ddot.txt
 
 # ---------------------
 
@@ -172,8 +165,8 @@ driver_IJ_bli_ddotxv.x: $(OBJS_IJ_bli_ddotxv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_IJ_bli_ddotxv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_IJ_bli_ddotxv.x $(LDFLAGS) 
 
 IJ_bli_ddotxv: driver_IJ_bli_ddotxv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJ_bli_ddotxv.x >  data/output_IJ_bli_ddotxv.m
-	tail data/output_IJ_bli_ddotxv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_IJ_bli_ddotxv.x >  data/output_IJ_bli_ddotxv.txt
+	tail data/output_IJ_bli_ddotxv.txt
 
 # ---------------------
 
@@ -183,8 +176,8 @@ driver_JI_Dots.x: $(OBJS_JI_DOTS) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JI_DOTS) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JI_Dots.x $(LDFLAGS) 
 
 JI_Dots: driver_JI_Dots.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JI_Dots.x > data/output_JI_Dots.m
-	tail data/output_JI_Dots.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JI_Dots.x > data/output_JI_Dots.txt
+	tail data/output_JI_Dots.txt
 
 # ---------------------
 
@@ -194,8 +187,8 @@ driver_JI_ddot.x: $(OBJS_JI_ddot) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JI_ddot) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JI_ddot.x $(LDFLAGS) 
 
 JI_ddot: driver_JI_ddot.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JI_ddot.x > data/output_JI_ddot.m
-	tail data/output_JI_ddot.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JI_ddot.x > data/output_JI_ddot.txt
+	tail data/output_JI_ddot.txt
 
 # ---------------------
 
@@ -205,8 +198,8 @@ driver_JI_bli_ddotxv.x: $(OBJS_JI_bli_ddotxv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JI_bli_ddotxv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JI_bli_ddotxv.x $(LDFLAGS) 
 
 JI_bli_ddotxv: driver_JI_bli_ddotxv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JI_bli_ddotxv.x >  data/output_JI_bli_ddotxv.m
-	tail data/output_JI_bli_ddotxv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JI_bli_ddotxv.x >  data/output_JI_bli_ddotxv.txt
+	tail data/output_JI_bli_ddotxv.txt
 
 # ---------------------
 
@@ -216,8 +209,8 @@ driver_JP_Axpy.x: $(OBJS_JP_Axpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JP_Axpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JP_Axpy.x $(LDFLAGS) 
 
 JP_Axpy: driver_JP_Axpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JP_Axpy.x > data/output_JP_Axpy.m
-	tail data/output_JP_Axpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JP_Axpy.x > data/output_JP_Axpy.txt
+	tail data/output_JP_Axpy.txt
 
 # ---------------------
 
@@ -227,8 +220,8 @@ driver_JP_daxpy.x: $(OBJS_JP_daxpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JP_daxpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JP_daxpy.x $(LDFLAGS) 
 
 JP_daxpy: driver_JP_daxpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JP_daxpy.x >  data/output_JP_daxpy.m
-	tail data/output_JP_daxpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JP_daxpy.x >  data/output_JP_daxpy.txt
+	tail data/output_JP_daxpy.txt
 
 # ---------------------
 
@@ -238,8 +231,8 @@ driver_JP_bli_daxpyv.x: $(OBJS_JP_bli_daxpyv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_JP_bli_daxpyv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_JP_bli_daxpyv.x $(LDFLAGS) 
 
 JP_bli_daxpyv: driver_JP_bli_daxpyv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JP_bli_daxpyv.x >  data/output_JP_bli_daxpyv.m
-	tail data/output_JP_bli_daxpyv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_JP_bli_daxpyv.x >  data/output_JP_bli_daxpyv.txt
+	tail data/output_JP_bli_daxpyv.txt
 
 # ---------------------
 
@@ -249,8 +242,8 @@ driver_PJI.x: $(OBJS_PJI) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PJI) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PJI.x $(LDFLAGS) 
 
 PJI: driver_PJI.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJI.x>  data/output_PJI.m
-	tail data/output_PJI.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJI.x>  data/output_PJI.txt
+	tail data/output_PJI.txt
 
 # ---------------------
 
@@ -260,8 +253,8 @@ driver_PJ_Axpy.x: $(OBJS_PJ_Axpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PJ_Axpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PJ_Axpy.x $(LDFLAGS) 
 
 PJ_Axpy: driver_PJ_Axpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJ_Axpy.x > data/output_PJ_Axpy.m
-	tail data/output_PJ_Axpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJ_Axpy.x > data/output_PJ_Axpy.txt
+	tail data/output_PJ_Axpy.txt
 
 # ---------------------
 
@@ -271,8 +264,8 @@ driver_PJ_daxpy.x: $(OBJS_PJ_daxpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PJ_daxpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PJ_daxpy.x $(LDFLAGS) 
 
 PJ_daxpy: driver_PJ_daxpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJ_daxpy.x >  data/output_PJ_daxpy.m
-	tail data/output_PJ_daxpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJ_daxpy.x >  data/output_PJ_daxpy.txt
+	tail data/output_PJ_daxpy.txt
 
 # ---------------------
 
@@ -282,8 +275,8 @@ driver_PJ_bli_daxpyv.x: $(OBJS_PJ_bli_daxpyv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_PJ_bli_daxpyv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_PJ_bli_daxpyv.x $(LDFLAGS) 
 
 PJ_bli_daxpyv: driver_PJ_bli_daxpyv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJ_bli_daxpyv.x >  data/output_PJ_bli_daxpyv.m
-	tail data/output_PJ_bli_daxpyv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_PJ_bli_daxpyv.x >  data/output_PJ_bli_daxpyv.txt
+	tail data/output_PJ_bli_daxpyv.txt
 
 # ---------------------
 
@@ -293,8 +286,8 @@ driver_I_dgemv.x: $(OBJS_I_dgemv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_I_dgemv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_I_dgemv.x $(LDFLAGS) 
 
 I_dgemv: driver_I_dgemv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_I_dgemv.x > data/output_I_dgemv.m data/output_I_dgemv.m
-	tail data/output_I_dgemv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_I_dgemv.x > data/output_I_dgemv.txt data/output_I_dgemv.txt
+	tail data/output_I_dgemv.txt
 
 # ---------------------
 
@@ -304,8 +297,8 @@ driver_I_bli_dgemv.x: $(OBJS_I_bli_dgemv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_I_bli_dgemv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_I_bli_dgemv.x $(LDFLAGS) 
 
 I_bli_dgemv: driver_I_bli_dgemv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_I_bli_dgemv.x > data/output_I_bli_dgemv.m data/output_I_bli_dgemv.m
-	tail data/output_I_bli_dgemv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_I_bli_dgemv.x > data/output_I_bli_dgemv.txt data/output_I_bli_dgemv.txt
+	tail data/output_I_bli_dgemv.txt
 
 # ---------------------
 
@@ -315,8 +308,8 @@ driver_P_Ger_J_Axpy.x: $(OBJS_P_GER_J_AXPY) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_P_GER_J_AXPY) $(UTIL_OBJS) $(BLAS_LIB) -o driver_P_Ger_J_Axpy.x $(LDFLAGS) 
 
 P_Ger_J_Axpy: driver_P_Ger_J_Axpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_Ger_J_Axpy.x >  data/output_P_Ger_J_Axpy.m
-	tail data/output_P_Ger_J_Axpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_Ger_J_Axpy.x >  data/output_P_Ger_J_Axpy.txt
+	tail data/output_P_Ger_J_Axpy.txt
 
 # ---------------------
 
@@ -326,8 +319,8 @@ driver_P_Ger_I_Axpy.x: $(OBJS_P_GER_I_AXPY) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_P_GER_I_AXPY) $(UTIL_OBJS) $(BLAS_LIB) -o driver_P_Ger_I_Axpy.x $(LDFLAGS) 
 
 P_Ger_I_Axpy: driver_P_Ger_I_Axpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_Ger_I_Axpy.x >  data/output_P_Ger_I_Axpy.m
-	tail data/output_P_Ger_I_Axpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_Ger_I_Axpy.x >  data/output_P_Ger_I_Axpy.txt
+	tail data/output_P_Ger_I_Axpy.txt
 
 # ---------------------
 
@@ -337,8 +330,8 @@ driver_P_bli_dger.x: $(OBJS_P_bli_dger) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_P_bli_dger) $(UTIL_OBJS) $(BLAS_LIB) -o driver_P_bli_dger.x $(LDFLAGS) 
 
 P_bli_dger: driver_P_bli_dger.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_bli_dger.x >  data/output_P_bli_dger.m
-	tail data/output_P_bli_dger.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_bli_dger.x >  data/output_P_bli_dger.txt
+	tail data/output_P_bli_dger.txt
 
 # ---------------------
 
@@ -348,8 +341,8 @@ driver_P_dger.x: $(OBJS_P_dger) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_P_dger) $(UTIL_OBJS) $(BLAS_LIB) -o driver_P_dger.x $(LDFLAGS) 
 
 P_dger: driver_P_dger.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_dger.x >  data/output_P_dger.m
-	tail data/output_P_dger.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_P_dger.x >  data/output_P_dger.txt
+	tail data/output_P_dger.txt
 
 # ---------------------
 
@@ -359,8 +352,8 @@ driver_J_Gemv_J_Axpy.x: $(OBJS_J_GEMV_J_Axpy) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_J_GEMV_J_Axpy) $(UTIL_OBJS) $(BLAS_LIB) -o driver_J_Gemv_J_Axpy.x $(LDFLAGS) 
 
 J_Gemv_J_Axpy: driver_J_Gemv_J_Axpy.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_Gemv_J_Axpy.x > data/output_J_Gemv_J_Axpy.m data/output_J_Gemv_J_Axpy.m
-	tail data/output_J_Gemv_J_Axpy.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_Gemv_J_Axpy.x > data/output_J_Gemv_J_Axpy.txt data/output_J_Gemv_J_Axpy.txt
+	tail data/output_J_Gemv_J_Axpy.txt
 
 # ---------------------
 
@@ -370,8 +363,8 @@ driver_J_Gemv_I_Dots.x: $(OBJS_J_GEMV_I_Dots) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_J_GEMV_I_Dots) $(UTIL_OBJS) $(BLAS_LIB) -o driver_J_Gemv_I_Dots.x $(LDFLAGS) 
 
 J_Gemv_I_Dots: driver_J_Gemv_I_Dots.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_Gemv_I_Dots.x > data/output_J_Gemv_I_Dots.m data/output_J_Gemv_I_Dots.m
-	tail data/output_J_Gemv_I_Dots.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_Gemv_I_Dots.x > data/output_J_Gemv_I_Dots.txt data/output_J_Gemv_I_Dots.txt
+	tail data/output_J_Gemv_I_Dots.txt
 
 # ---------------------
 
@@ -381,8 +374,8 @@ driver_J_dgemv.x: $(OBJS_J_dgemv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_J_dgemv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_J_dgemv.x $(LDFLAGS) 
 
 J_dgemv: driver_J_dgemv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_dgemv.x > data/output_J_dgemv.m data/output_J_dgemv.m
-	tail data/output_J_dgemv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_dgemv.x > data/output_J_dgemv.txt data/output_J_dgemv.txt
+	tail data/output_J_dgemv.txt
 
 # ---------------------
 
@@ -392,8 +385,8 @@ driver_J_bli_dgemv.x: $(OBJS_J_bli_dgemv) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_J_bli_dgemv) $(UTIL_OBJS) $(BLAS_LIB) -o driver_J_bli_dgemv.x $(LDFLAGS) 
 
 J_bli_dgemv: driver_J_bli_dgemv.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_bli_dgemv.x > data/output_J_bli_dgemv.m data/output_J_bli_dgemv.m
-	tail data/output_J_bli_dgemv.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_bli_dgemv.x > data/output_J_bli_dgemv.txt data/output_J_bli_dgemv.txt
+	tail data/output_J_bli_dgemv.txt
 
 # ---------------------
 
@@ -403,8 +396,8 @@ driver_J_Gemv_JI.x: $(OBJS_J_Gemv_JI) $(UTIL_OBJS)
 	$(LINKER) $(OBJS_J_Gemv_JI) $(UTIL_OBJS) $(BLAS_LIB) -o driver_J_Gemv_JI.x $(LDFLAGS) 
 
 J_Gemv_JI: driver_J_Gemv_JI.x
-	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_Gemv_JI.x > data/output_J_Gemv_JI.m data/output_J_Gemv_JI.m
-	tail data/output_J_Gemv_JI.m
+	echo "$(NREPEATS) $(NFIRST) $(NLAST_SMALL) $(NINC)" | ./driver_J_Gemv_JI.x > data/output_J_Gemv_JI.txt data/output_J_Gemv_JI.txt
+	tail data/output_J_Gemv_JI.txt
 
 # ---------------------
 
