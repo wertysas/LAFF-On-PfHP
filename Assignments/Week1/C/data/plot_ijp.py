@@ -3,6 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
+
+def plot timings
+
+
+
+
+if __name__ == '__main__':
+    
 data_file = path.join(path.dirname(__file__), "output_IJP.txt")
 
 timings = pd.read_csv(data_file, comment="#", header=0, delim_whitespace=True)

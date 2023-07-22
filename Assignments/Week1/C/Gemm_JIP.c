@@ -4,9 +4,10 @@
 
 void MyGemm(int m, int n, int k, double *A, int ldA,
             double *B, int ldB, double *C, int ldC) {
-    for (int i = 0; i < m; i++)
-        for (int j = 0; j < n; j++)
+    for (int j = 0; j < n; j++)
+        for (int i = 0; i < m; i++)
             for (int p = 0; p < k; p++)
                 gamma(i, j) += alpha(i, p) * beta(p, j);
 }
   
+
